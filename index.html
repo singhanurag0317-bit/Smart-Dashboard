@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Dashboard</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+    <header class="head">
+        <nav class="nav">
+            <div class="left">
+                <div class="brand">
+               
+                    <div class="brand-text">
+                      <h1 class="app-title">Smart Dashboard</h1>
+                      <p class="app-subtitle">Your productivity hub</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="right">
+                <p id="greeting">Good Evening</p>
+                <p id="time">00:00</p>
+            </div>
+        </nav>
+
+    </header>
+
+    <!-- ================= MAIN DASHBOARD ================= -->
+    <main class="Dashboard-container">
+        <section class="Dashboard-grid">
+
+            <!-- ===== Widget: Notes ===== -->
+            <section class="widget widget-notes">
+                <h2>Quick Notes</h2>
+
+                <textarea placeholder="Write something meaningful..."></textarea>
+
+                <button class="save-note">Save Note</button>
+
+                <div class="notes-list"></div>
+            </section>
+
+            <!-- ===== Widget: Focus Timer ===== -->
+            <section class="widget widget-focus">
+                <h2>Focus Timer</h2>
+
+                <div class="timer-display">25:00</div>
+
+                <div class="timer-controls">
+                    <button class="start">Start</button>
+                    <button class="pause">Pause</button>
+                    <button class="reset">Reset</button>
+                </div>
+            </section>
+
+            <!-- ===== Widget: Task Snapshot ===== -->
+            <section class="widget widget-task">
+                <h2>Task Snapshot</h2>
+
+                <div class="task-stats">
+                    <div class="stat">
+                        <span class="label">Pending</span>
+                        <span class="value">0</span>
+                    </div>
+
+                    <div class="stat">
+                        <span class="label">Completed</span>
+                        <span class="value">0</span>
+                    </div>
+                </div>
+
+                <button class="view-tasks">View Tasks</button>
+            </section>
+
+            <!-- ===== Widget: Dev Utilities ===== -->
+            <section class="widget widget-dev">
+                <h2>Dev Utilities</h2>
+
+                <div class="utilities">
+                    <button class="btn" data-tool="password">Password Generator</button>
+                    <button class="btn" data-tool="color">Color Helper</button>
+                    <button class="btn" data-tool="json">JSON Formatter</button>
+                </div>
+
+                <div class="utility-output"></div>
+            </section>
+
+        </section>
+    </main>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="footer">
+        <p>© 2025 Anurag | All rights reserved</p>
+    </footer>
+
+    <!-- JS -->
+    <script src="script.js"></script>
+</body>
+
+</html>
