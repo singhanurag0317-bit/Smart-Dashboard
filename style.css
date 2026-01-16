@@ -1072,12 +1072,9 @@ body.zen-active .zen-toggle {
         order: 1;
     }
 
-    /* 2. Date: Flexible width */
+    /* 2. Date: Hidden on mobile */
     .task-date-input {
-        flex: 1;
-        width: auto;
-        order: 2;
-        text-align: center;
+        display: none;
     }
 
     /* 3. Priority: Flexible width */
