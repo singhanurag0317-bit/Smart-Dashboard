@@ -131,8 +131,9 @@
                 <div class="task-input-row">
                     <input type="text" class="new-task-input" placeholder="Add a new task..." />
 
-                    <!-- Date Input -->
-                    <input type="date" class="task-date-input" />
+                    <!-- Date Input (Text type initially for placeholder support) -->
+                    <input type="text" class="task-date-input" placeholder="Due Date" onfocus="(this.type='date')"
+                        onblur="(this.type='text')" />
 
                     <!-- Priority Selector -->
                     <select class="priority-select">
