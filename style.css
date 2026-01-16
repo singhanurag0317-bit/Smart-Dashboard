@@ -1072,28 +1072,33 @@ body.zen-active .zen-toggle {
         order: 1;
     }
 
-    /* 2. Date: 50% width minus gap compensation */
+    /* 2. Date: Flexible width */
     .task-date-input {
-        width: calc(50% - 6px);
+        flex: 1;
+        width: auto;
         order: 2;
         text-align: center;
     }
 
-    /* 3. Priority: 50% width minus gap compensation */
+    /* 3. Priority: Flexible width */
     .priority-select {
-        width: calc(50% - 6px);
+        flex: 1;
+        width: auto;
         order: 3;
     }
 
-    /* 4. Add Button: Full Width, Big Target */
+    /* 4. Add Button: Small & Compact */
     .add-task-btn {
-        width: 100%;
+        width: 44px;
+        flex: 0 0 44px;
+        /* Fixed width */
         order: 4;
         height: 44px;
-        /* Taller touch target */
-        margin-top: 4px;
+        margin-top: 0;
+        /* Align with others */
         background: linear-gradient(135deg, var(--primary), var(--secondary));
         font-size: 1.2rem;
+        border-radius: 10px;
     }
 }
 
