@@ -6,102 +6,223 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Smart Dashboard</title>
 
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
     <!-- CSS -->
     <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
 
-    <!-- ================= HEADER ================= -->
-    <header class="head">
-        <nav class="nav">
-            <div class="left">
-                <div class="brand">
-               
-                    <div class="brand-text">
-                      <h1 class="app-title">Smart Dashboard</h1>
-                      <p class="app-subtitle">Your productivity hub</p>
-                    </div>
+    <div class="background-mesh"></div>
+
+    <div class="app-container">
+
+        <!-- HEADER -->
+        <header class="app-header">
+            <div class="brand">
+                <div class="logo-icon">
+                    <i class="ph-fill ph-check-square-offset"></i>
+                </div>
+                <div class="brand-info">
+                    <h1>Smart Dashboard</h1>
+                    <p>Your productivity hub</p>
                 </div>
             </div>
 
-            <div class="right">
-                <p id="greeting">Good Evening</p>
-                <p id="time">00:00</p>
+            <div class="header-right">
+                <button class="icon-btn zen-toggle" title="Toggle Zen Mode">
+                    <i class="ph-bold ph-eye"></i>
+                </button>
+                <div class="divider-v"></div>
+                <div class="greeting-box">
+                    <i id="greet-icon" class="ph ph-sun"></i>
+                    <span id="greeting">Good Evening</span>
+                </div>
+                <div class="time-box">
+                    <span id="time">00:00</span>
+                    <span id="date" class="date-small">Oct 24</span>
+                </div>
             </div>
-        </nav>
+        </header>
 
-    </header>
+        <!-- QUOTE OF THE DAY -->
+        <section class="quote-banner">
+            <div class="quote-content">
+                <p id="quote-text">Loading inspiration...</p>
+            </div>
+        </section>
 
-    <!-- ================= MAIN DASHBOARD ================= -->
-    <main class="Dashboard-container">
-        <section class="Dashboard-grid">
+        <!-- MAIN GRID -->
+        <main class="dashboard-grid">
 
-            <!-- ===== Widget: Notes ===== -->
-            <section class="widget widget-notes">
-                <h2>Quick Notes</h2>
+            <!-- 1. FOCUS TIMER -->
+            <section class="glass-card widget-focus">
+                <div class="card-header">
+                    <h2><i class="ph ph-timer"></i> Focus Timer</h2>
+                    <div class="time-adjust">
+                        <button class="adjust-btn minus" data-val="-5" title="-5 min">-5</button>
+                        <button class="adjust-btn minus small" data-val="-1" title="-1 min">-1</button>
+                        <button class="adjust-btn plus small" data-val="1" title="+1 min">+1</button>
+                        <button class="adjust-btn plus" data-val="5" title="+5 min">+5</button>
+                    </div>
+                </div>
 
-                <textarea placeholder="Write something meaningful..."></textarea>
-
-                <button class="save-note">Save Note</button>
-
-                <div class="notes-list"></div>
-            </section>
-
-            <!-- ===== Widget: Focus Timer ===== -->
-            <section class="widget widget-focus">
-                <h2>Focus Timer</h2>
-
-                <div class="timer-display">25:00</div>
+                <div class="timer-center">
+                    <div class="timer-circle-container">
+                        <svg class="progress-ring" width="220" height="220">
+                            <circle class="progress-ring__circle-bg" stroke="rgba(255,255,255,0.1)" stroke-width="8"
+                                fill="transparent" r="90" cx="110" cy="110" />
+                            <circle class="progress-ring__circle" stroke="#38bdf8" stroke-width="8" fill="transparent"
+                                r="90" cx="110" cy="110" />
+                        </svg>
+                        <div class="timer-text">
+                            <span id="timer-display" title="Click to set custom time">25:00</span>
+                            <span class="timer-status">Ready</span>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="timer-controls">
-                    <button class="start">Start</button>
-                    <button class="pause">Pause</button>
-                    <button class="reset">Reset</button>
+                    <button class="btn-primary start-btn">Start</button>
+                    <button class="btn-secondary pause-btn" disabled>Pause</button>
+                    <button class="btn-ghost reset-btn">Reset</button>
                 </div>
             </section>
 
-            <!-- ===== Widget: Task Snapshot ===== -->
-            <section class="widget widget-task">
-                <h2>Task Snapshot</h2>
+            <!-- 2. QUICK NOTES -->
+            <section class="glass-card widget-notes">
+                <div class="card-header">
+                    <h2><i class="ph ph-notebook"></i> Quick Notes</h2>
+                    <span class="note-count">0</span>
+                </div>
 
-                <div class="task-stats">
-                    <div class="stat">
-                        <span class="label">Pending</span>
-                        <span class="value">0</span>
+                <div class="new-note-area">
+                    <textarea placeholder="Write something meaningful..."></textarea>
+                    <button class="save-note-btn"><i class="ph-bold ph-plus"></i></button>
+                </div>
+
+                <div class="notes-list custom-scroll">
+                    <!-- Note items injected here -->
+                </div>
+            </section>
+
+            <!-- 3. TASKS (Enhanced) -->
+            <section class="glass-card widget-tasks">
+                <div class="card-header">
+                    <h2><i class="ph ph-list-checks"></i> Tasks</h2>
+
+                    <!-- New Filters -->
+                    <div class="task-filters">
+                        <button class="filter-btn active" data-filter="all">All</button>
+                        <button class="filter-btn" data-filter="active">Active</button>
+                        <button class="filter-btn" data-filter="completed">Done</button>
+                    </div>
+                </div>
+
+                <div class="task-input-row">
+                    <input type="text" class="new-task-input" placeholder="Add a new task..." />
+
+                    <!-- Date Input -->
+                    <input type="date" class="task-date-input" />
+
+                    <!-- Priority Selector -->
+                    <select class="priority-select">
+                        <option value="normal">Normal</option>
+                        <option value="high">High</option>
+                        <option value="low">Low</option>
+                    </select>
+
+                    <button class="add-task-btn"><i class="ph-bold ph-plus"></i></button>
+                </div>
+
+
+                <div class="tasks-list custom-scroll">
+                    <!-- Task items injected here -->
+                </div>
+
+                <div class="task-footer-bar">
+                    <span class="progress-text">0/0 Completed</span>
+                    <button class="clear-completed-btn text-btn">Clear Completed</button>
+                </div>
+            </section>
+
+            <!-- 4. SOUND & TOOLS -->
+            <div class="widget-column-split">
+
+                <!-- 4a. SOUNDSCAPES -->
+                <section class="glass-card widget-sound">
+                    <div class="card-header">
+                        <h2><i class="ph ph-waves"></i> Calm Sounds</h2>
+                        <div class="sound-indicator">OFF</div>
+                    </div>
+                    <div class="sound-controls">
+                        <button class="sound-btn" data-type="rain"><i class="ph-bold ph-cloud-rain"></i> Rain</button>
+                        <button class="sound-btn" data-type="wind"><i class="ph-bold ph-wind"></i> Wind</button>
+                        <button class="sound-btn" data-type="om"><i class="ph-bold ph-yin-yang"></i> Om</button>
+                    </div>
+                    <button class="sound-toggle btn-ghost stop-all"><i class="ph-fill ph-stop"></i> Stop Audio</button>
+
+                    <div style="margin-top:1rem;">
+                        <input type="range" class="volume-slider" min="0" max="0.5" step="0.01" value="0.1">
+                    </div>
+                </section>
+
+                <!-- 4b. DEV UTILITIES -->
+                <section class="glass-card widget-tools">
+                    <div class="card-header">
+                        <h2><i class="ph ph-code"></i> Dev Utilities</h2>
                     </div>
 
-                    <div class="stat">
-                        <span class="label">Completed</span>
-                        <span class="value">0</span>
+                    <div class="tools-grid">
+                        <button class="tool-btn" data-tool="password">
+                            <i class="ph ph-lock-key"></i>
+                        </button>
+                        <button class="tool-btn" data-tool="color">
+                            <i class="ph ph-palette"></i>
+                        </button>
+                        <button class="tool-btn" data-tool="json">
+                            <i class="ph ph-brackets-curly"></i>
+                        </button>
                     </div>
-                </div>
 
-                <button class="view-tasks">View Tasks</button>
-            </section>
+                    <!-- Output Area -->
+                    <div class="tool-output hidden">
+                        <div class="output-header">
+                            <span class="tool-title">Result</span>
+                            <button class="close-output"><i class="ph ph-x"></i></button>
+                        </div>
+                        <div class="output-content"></div>
+                    </div>
+                </section>
+            </div>
 
-            <!-- ===== Widget: Dev Utilities ===== -->
-            <section class="widget widget-dev">
-                <h2>Dev Utilities</h2>
+        </main>
 
-                <div class="utilities">
-                    <button class="btn" data-tool="password">Password Generator</button>
-                    <button class="btn" data-tool="color">Color Helper</button>
-                    <button class="btn" data-tool="json">JSON Formatter</button>
-                </div>
+        <footer class="main-footer glass-header">
+            <div class="footer-left">
+                <p>&copy; 2025 Anurag | All rights reserved.</p>
+            </div>
+            <div class="footer-right social-links">
+                <a href="https://www.instagram.com/anurag_jadon15?igsh=bHp4MWE4MWl6b2R2" target="_blank"
+                    title="Instagram"><i class="ph-bold ph-instagram-logo"></i></a>
+                <a href="https://x.com/Anurag_jadon15" target="_blank" title="Twitter"><i
+                        class="ph-bold ph-twitter-logo"></i></a>
+                <a href="https://github.com/singhanurag0317-bit" target="_blank" title="GitHub"><i
+                        class="ph-bold ph-github-logo"></i></a>
+            </div>
+        </footer>
 
-                <div class="utility-output"></div>
-            </section>
+    </div>
 
-        </section>
-    </main>
-
-    <!-- ================= FOOTER ================= -->
-    <footer class="footer">
-        <p>© 2025 Anurag | All rights reserved</p>
-    </footer>
-
-    <!-- JS -->
     <script src="script.js"></script>
 </body>
 
