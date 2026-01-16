@@ -1054,24 +1054,46 @@ body.zen-active .zen-toggle {
         text-align: center;
     }
 
-    /* Mobile Tasks Input Fix */
+    /* Mobile Tasks Input Fix - Smart Grid */
     .task-input-row {
-        flex-direction: column;
-        align-items: stretch;
+        flex-wrap: wrap;
+        /* Allow wrapping */
         padding: 1rem;
-        gap: 1rem;
+        gap: 12px;
+        background: rgba(0, 0, 0, 0.3);
+        /* Slightly darker on mobile for contrast */
     }
 
+    /* 1. Task Text: Full Width */
     .new-task-input {
         width: 100%;
         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         padding: 10px 0;
+        order: 1;
     }
 
-    .task-date-input,
-    .priority-select,
+    /* 2. Date: 50% width minus gap compensation */
+    .task-date-input {
+        width: calc(50% - 6px);
+        order: 2;
+        text-align: center;
+    }
+
+    /* 3. Priority: 50% width minus gap compensation */
+    .priority-select {
+        width: calc(50% - 6px);
+        order: 3;
+    }
+
+    /* 4. Add Button: Full Width, Big Target */
     .add-task-btn {
         width: 100%;
+        order: 4;
+        height: 44px;
+        /* Taller touch target */
+        margin-top: 4px;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        font-size: 1.2rem;
     }
 }
 
