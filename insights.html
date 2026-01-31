@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Insights - Prime Workspace</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+    <div class="background-mesh"></div>
+
+    <div class="app-container">
+
+        <!-- HEADER -->
+        <header class="app-header">
+            <div class="brand">
+                <a href="index.html" class="logo-icon" style="text-decoration: none;">
+                    <i class="ph-fill ph-arrow-left"></i>
+                </a>
+                <div class="brand-info">
+                    <h1>Prime Insights</h1>
+                    <p>Track your progress</p>
+                </div>
+            </div>
+
+            <div class="header-right">
+                <a href="index.html" class="btn-ghost" style="text-decoration:none;">Back to Dashboard</a>
+            </div>
+        </header>
+
+        <!-- MAIN LAYOUT -->
+        <main class="dashboard-grid">
+
+            <!-- PROGRESS & INSIGHTS WIDGET -->
+            <section class="glass-card widget-progress">
+                <div class="card-header">
+                    <h2><i class="ph ph-trend-up"></i> Insights & Progress</h2>
+                </div>
+
+                <div class="progress-main">
+                    <div class="progress-info">
+                        <span class="progress-label">Your Daily Progress</span>
+                        <span class="progress-percent">0%</span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill"></div>
+                    </div>
+                    <p class="motivation-text">Ready to conquer the day?</p>
+                </div>
+
+                <!-- NEW: STATS ROW -->
+                <div class="stats-row">
+                    <div class="stat-card streak-card">
+                        <div class="stat-icon flame-icon">
+                            <i class="ph-fill ph-fire"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="streak-value">0</span>
+                            <span class="stat-label">Day Streak</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card focus-card">
+                        <div class="stat-icon time-icon">
+                            <i class="ph-fill ph-hourglass"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="focus-total">0h 0m</span>
+                            <span class="stat-label">Total Focus</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="charts-grid">
+                    <!-- Weekly Activity (Mock) -->
+                    <div class="chart-box">
+                        <h3>Weekly Activity</h3>
+                        <div class="bar-chart">
+                            <!-- Bars injected by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Priority Distribution -->
+                    <div class="chart-box">
+                        <h3>Task Priority</h3>
+                        <div class="donut-chart-container">
+                            <div class="donut-chart"></div>
+                            <div class="donut-legend">
+                                <div class="legend-item"><span class="dot high"></span>High</div>
+                                <div class="legend-item"><span class="dot normal"></span>Normal</div>
+                                <div class="legend-item"><span class="dot low"></span>Low</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <footer class="main-footer glass-header">
+            <div class="footer-content">
+                <div class="footer-left">
+                    <p>&copy; 2025 Prime Workspace. All rights reserved.</p>
+                </div>
+                <div class="footer-center">
+                    <a href="privacy.html">Privacy Policy</a>
+                    <span class="divider-dot">•</span>
+                    <a href="terms.html">Terms & Conditions</a>
+                </div>
+                <!-- Feedback button removed -->
+                <div class="footer-right">
+                    <div class="social-links">
+                        <a href="https://www.instagram.com/anurag_jadon15?igsh=bHp4MWE4MWl6b2R2" target="_blank"
+                            title="Instagram"><i class="ph-bold ph-instagram-logo"></i></a>
+                        <a href="https://x.com/Anurag_jadon15" target="_blank" title="Twitter"><i
+                                class="ph-bold ph-twitter-logo"></i></a>
+                        <a href="https://github.com/singhanurag0317-bit" target="_blank" title="GitHub"><i
+                                class="ph-bold ph-github-logo"></i></a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

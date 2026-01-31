@@ -137,6 +137,11 @@ function startTimer() {
             if (statusText) statusText.textContent = "Flow Complete";
             if (startBtn) startBtn.disabled = false;
             if (pauseBtn) pauseBtn.disabled = true;
+
+            // Save Focus Time
+            const durationMins = Math.round(timerDuration / 60);
+            saveFocusTime(durationMins);
+            alert("Great focus session! " + durationMins + " minutes added to your stats.");
         }
     }, 1000);
 }
@@ -321,8 +326,8 @@ function renderTasks() {
                 </div>
             </div>
         `;
-        taskListEl.appendChild(div);
     });
+    updateProgressSection();
 }
 
 function addTask() {
@@ -395,6 +400,239 @@ window.deleteTask = (index) => {
 };
 
 renderTasks();
+
+// --- WIDGET X: PROGRESS & INSIGHTS ---
+function updateProgressSection() {
+    const total = tasks.length;
+    const completed = tasks.filter(t => t.completed).length;
+    const percent = total === 0 ? 0 : Math.round((completed / total) * 100);
+
+    // 1. Update Main Bar
+    const barFill = document.querySelector('.progress-bar-fill');
+    const percentText = document.querySelector('.progress-percent');
+    const motivationText = document.querySelector('.motivation-text');
+
+    if (barFill) barFill.style.width = `${percent}%`;
+    if (percentText) percentText.textContent = `${percent}%`;
+
+    // 2. Motivation Logic
+    let msg = "Ready to conquer the day?";
+    if (percent === 100 && total > 0) msg = "Incredible! You've crushed it today! 🎉";
+    else if (percent >= 75) msg = "So close! Finish strong! 🚀";
+    else if (percent >= 50) msg = "Halfway there! Keep the momentum! 🔥";
+    else if (percent >= 25) msg = "Great start! Keep pushing! 💪";
+    else if (total > 0) msg = "One step at a time. You got this! 🌱";
+
+    if (motivationText) motivationText.textContent = msg;
+
+    // 3. Priority Donut Chart
+    const high = tasks.filter(t => t.priority === 'high' && !t.completed).length;
+    const normal = tasks.filter(t => t.priority === 'normal' && !t.completed).length;
+    const low = tasks.filter(t => t.priority === 'low' && !t.completed).length;
+    const pendingTotal = high + normal + low;
+
+    let dHigh = 0, dNormal = 0, dLow = 0;
+    if (pendingTotal > 0) {
+        dHigh = (high / pendingTotal) * 100;
+        dNormal = (normal / pendingTotal) * 100;
+        dLow = (low / pendingTotal) * 100;
+    } else if (total > 0 && completed === total) {
+        dHigh = 0; dNormal = 0; dLow = 100; // All done state
+    }
+
+    const donut = document.querySelector('.donut-chart');
+    if (donut) {
+        const p1 = dHigh;
+        const p2 = dHigh + dNormal;
+
+        if (pendingTotal === 0 && total === 0) {
+            donut.style.background = `conic-gradient(var(--glass-border) 0% 100%)`;
+        } else {
+            donut.style.background = `conic-gradient(
+                var(--danger) 0% ${p1}%,
+                var(--secondary) ${p1}% ${p2}%,
+                var(--text-muted) ${p2}% 100%
+            )`;
+        }
+    }
+
+    // 4. Weekly Activity (Mock)
+    const barChart = document.querySelector('.bar-chart');
+    if (barChart && barChart.children.length === 0) {
+        const days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+        const mockData = [40, 70, 50, 90, 60, 30, 80];
+
+        barChart.innerHTML = days.map((d, i) => `
+            <div class="chart-bar" style="height: ${mockData[i]}%;">
+                <span>${d}</span>
+            </div>
+        `).join('');
+    }
+
+    // 5. NEW: Enhancements (Streak & Focus)
+    updateStatsUI();
+}
+
+// --- STATS LOGIC ---
+function updateStatsUI() {
+    // A. Streak Counter
+    const today = new Date().toDateString();
+    const lastActive = localStorage.getItem('zenith_last_active');
+    let streak = parseInt(localStorage.getItem('zenith_streak') || 0);
+
+    if (lastActive !== today) {
+        const yesterday = new Date();
+        yesterday.setDate(yesterday.getDate() - 1);
+
+        if (lastActive === yesterday.toDateString()) {
+            streak++; // Continue streak
+        } else {
+            streak = 1; // Reset or start new
+        }
+        localStorage.setItem('zenith_last_active', today);
+        localStorage.setItem('zenith_streak', streak);
+    }
+
+    const streakEl = document.getElementById('streak-value');
+    if (streakEl) streakEl.innerHTML = `${streak} <span style="font-size:1rem; color:#fbbf24;">days</span>`;
+
+    // B. Focus Time
+    const totalMinutes = parseInt(localStorage.getItem('zenith_focus_minutes') || 0);
+    const hours = Math.floor(totalMinutes / 60);
+    const mins = totalMinutes % 60;
+
+    const focusEl = document.getElementById('focus-total');
+    if (focusEl) focusEl.textContent = `${hours}h ${mins}m`;
+}
+
+// Helper to save focus time
+function saveFocusTime(minutes) {
+    let current = parseInt(localStorage.getItem('zenith_focus_minutes') || 0);
+    localStorage.setItem('zenith_focus_minutes', current + minutes);
+    updateStatsUI(); // Refresh UI if on insights page
+}
+
+// --- FEATURE: FEEDBACK MODAL (BACKEND INTEGRATION) ---
+const feedbackBtn = document.querySelector('.btn-feedback');
+
+if (feedbackBtn) {
+    feedbackBtn.addEventListener('click', (e) => {
+        e.preventDefault(); // Prevent mailto default
+        openFeedbackModal();
+    });
+}
+
+function openFeedbackModal() {
+    // Check if modal exists
+    let modal = document.querySelector('.feedback-modal');
+    if (!modal) {
+        createFeedbackModal();
+        modal = document.querySelector('.feedback-modal');
+    }
+
+    // Show modal
+    setTimeout(() => {
+        modal.classList.add('active');
+    }, 10);
+}
+
+function createFeedbackModal() {
+    const modalHTML = `
+        <div class="feedback-modal glass-card">
+            <button class="close-feedback"><i class="ph ph-x"></i></button>
+            <div class="feedback-header">
+                <h2><i class="ph-bold ph-paper-plane-tilt"></i> Send Feedback</h2>
+                <p>We value your thoughts!</p>
+            </div>
+            
+            <form id="feedback-form">
+                <div class="form-group">
+                    <label>Name (Optional)</label>
+                    <input type="text" name="name" placeholder="John Doe">
+                </div>
+                <div class="form-group">
+                    <label>Email (Optional)</label>
+                    <input type="email" name="email" placeholder="john@example.com">
+                </div>
+                <div class="form-group">
+                    <label>Message</label>
+                    <textarea name="message" placeholder="What's on your mind?" required></textarea>
+                </div>
+                <button type="submit" class="btn-primary" style="width:100%;">Submit Feedback</button>
+            </form>
+            <div class="feedback-status hidden"></div>
+        </div>
+        <div class="feedback-overlay"></div>
+    `;
+
+    const div = document.createElement('div');
+    div.innerHTML = modalHTML;
+    document.body.appendChild(div);
+
+    // Close Events
+    const overlay = document.querySelector('.feedback-overlay');
+    const closeBtn = document.querySelector('.close-feedback');
+    const modal = document.querySelector('.feedback-modal');
+
+    const closeModal = () => {
+        modal.classList.remove('active');
+        overlay.classList.remove('active');
+        setTimeout(() => {
+            modal.style.display = 'none';
+            overlay.style.display = 'none';
+        }, 300);
+    };
+
+    // Override active/display logic for init
+    modal.style.display = 'block';
+    overlay.style.display = 'block';
+
+    setTimeout(() => {
+        overlay.classList.add('active');
+    }, 10);
+
+    closeBtn.addEventListener('click', closeModal);
+    overlay.addEventListener('click', closeModal);
+
+    // Form Submit
+    const form = document.querySelector('#feedback-form');
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = form.querySelector('button');
+        const originalText = btn.textContent;
+        btn.textContent = 'Sending...';
+        btn.disabled = true;
+
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
+
+        try {
+            const res = await fetch('http://localhost:3000/api/feedback', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            const result = await res.json();
+
+            if (result.success) {
+                form.style.display = 'none';
+                const status = document.querySelector('.feedback-status');
+                status.innerHTML = `<i class="ph-fill ph-check-circle" style="color:var(--success); font-size:3rem; margin-bottom:1rem;"></i><p>Thanks! We got your message.</p>`;
+                status.classList.remove('hidden');
+
+                setTimeout(closeModal, 2000);
+            } else {
+                alert('Error: ' + result.error);
+            }
+        } catch (err) {
+            console.error(err);
+            alert('Failed to connect to server. Ensure Node.js server is running.');
+        } finally {
+            btn.textContent = originalText;
+            btn.disabled = false;
+        }
+    });
+}
 
 
 // --- WIDGET 4: TOOLS  ---
