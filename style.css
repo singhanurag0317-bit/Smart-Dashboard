@@ -1270,7 +1270,18 @@ body.zen-active .zen-toggle {
 }
 
 /* Responsive */
+@media (max-width: 1200px) {
+    .dashboard-grid {
+        gap: 1.5rem;
+    }
+}
+
 @media (max-width: 1024px) {
+    .app-container {
+        max-width: 96%;
+        padding: 1.5rem;
+    }
+
     .widget-tasks {
         grid-column: span 12;
     }
@@ -1287,9 +1298,29 @@ body.zen-active .zen-toggle {
 }
 
 @media (max-width: 768px) {
+    .app-header {
+        flex-direction: column;
+        gap: 1.5rem;
+        padding: 1.5rem;
+        text-align: center;
+    }
+
+    .brand {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .header-right {
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
     .dashboard-grid {
         display: flex;
         flex-direction: column;
+        gap: 1.5rem;
     }
 
     .widget-focus,
@@ -1304,28 +1335,43 @@ body.zen-active .zen-toggle {
     }
 
     .app-container {
-        opacity: 1;
-        max-width: 100%;
         padding: 1rem;
+        gap: 1.5rem;
+    }
+
+    .quote-banner {
+        margin-top: 0;
+    }
+
+    .quote-content p {
+        font-size: 1.1rem;
     }
 
     .main-footer {
         flex-direction: column;
-        gap: 1rem;
+        gap: 1.5rem;
+        padding: 1.5rem;
         text-align: center;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .footer-center {
+        flex-wrap: wrap;
+        justify-content: center;
     }
 
     /* Mobile Tasks Input Fix - Smart Grid */
     .task-input-row {
-        flex-wrap: wrap;
-        /* Allow wrapping */
-        padding: 1rem;
-        gap: 12px;
+        flex-direction: column;
+        padding: 1.2rem;
+        gap: 1rem;
         background: rgba(0, 0, 0, 0.3);
-        /* Slightly darker on mobile for contrast */
     }
 
-    /* 1. Task Text: Full Width */
     .new-task-input {
         width: 100%;
         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -1333,30 +1379,131 @@ body.zen-active .zen-toggle {
         order: 1;
     }
 
-    /* 2. Date: Hidden on mobile */
     .task-date-input {
-        display: none;
+        width: 100%;
+        order: 2;
     }
 
-    /* 3. Priority: Flexible width */
     .priority-select {
-        flex: 1;
-        width: auto;
+        width: 100%;
         order: 3;
     }
 
-    /* 4. Add Button: Small & Compact */
     .add-task-btn {
-        width: 44px;
-        flex: 0 0 44px;
-        /* Fixed width */
+        width: 100%;
+        height: 48px;
         order: 4;
-        height: 44px;
-        margin-top: 0;
-        /* Align with others */
-        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        border-radius: var(--radius-md);
+    }
+
+    /* Timer responsiveness */
+    .timer-circle-container {
+        width: 180px;
+        height: 180px;
+    }
+
+    .progress-ring {
+        width: 180px;
+        height: 180px;
+    }
+
+    .progress-ring__circle,
+    .progress-ring__circle-bg {
+        r: 75;
+        cx: 90;
+        cy: 90;
+    }
+
+    #timer-display {
+        font-size: 2.5rem;
+    }
+
+    /* Insights Page adjustments */
+    .stats-row {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .charts-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .donut-chart-container {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    /* Legal Pages */
+    .legal-container {
+        margin: 2rem 1rem;
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    :root {
+        --radius-lg: 16px;
+        --radius-md: 12px;
+    }
+
+    .app-header {
+        padding: 1rem;
+    }
+
+    .brand-info h1 {
+        font-size: 1.25rem;
+    }
+
+    .header-right {
+        gap: 0.8rem;
+    }
+
+    .greeting-box,
+    .divider-v {
+        display: none;
+    }
+
+    .time-box {
+        font-size: 0.9rem;
+    }
+
+    .btn-primary,
+    .btn-secondary,
+    .btn-ghost {
+        padding: 8px 16px;
+        font-size: 0.85rem;
+    }
+
+    .timer-circle-container {
+        width: 160px;
+        height: 160px;
+    }
+
+    .progress-ring {
+        width: 160px;
+        height: 160px;
+    }
+
+    .progress-ring__circle,
+    .progress-ring__circle-bg {
+        r: 65;
+        cx: 80;
+        cy: 80;
+    }
+
+    #timer-display {
+        font-size: 2rem;
+    }
+
+    .social-links {
+        gap: 0.8rem;
+    }
+
+    .social-links a {
+        width: 38px;
+        height: 38px;
         font-size: 1.2rem;
-        border-radius: 10px;
     }
 }
 
